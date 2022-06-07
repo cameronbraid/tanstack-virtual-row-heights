@@ -6,6 +6,7 @@ import './index.css';
 import { useVirtual } from 'react-virtual';
 
 function App() {
+  return <b>test</b>;
   const cells = new Array(10).fill(true).map(() =>
     new Array(10).fill(true).map(() => ({
       height: 25 + Math.round(Math.random() * 100),

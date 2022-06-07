@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import "./index.css";
+import './index.css';
 
-import { useVirtual } from "react-virtual";
+import { useVirtual } from 'react-virtual';
 
 function App() {
-  const cells = new Array(10000).fill(true).map(() =>
-    new Array(10000).fill(true).map(() => ({
+  const cells = new Array(10).fill(true).map(() =>
+    new Array(10).fill(true).map(() => ({
       height: 25 + Math.round(Math.random() * 100),
-      width: 75 + Math.round(Math.random() * 100)
+      width: 75 + Math.round(Math.random() * 100),
     }))
   );
 
@@ -26,13 +26,13 @@ function GridVirtualizerDynamic({ cells }) {
 
   const rowVirtualizer = useVirtual({
     size: cells.length,
-    parentRef
+    parentRef,
   });
 
   const columnVirtualizer = useVirtual({
     horizontal: true,
     size: cells[0].length,
-    parentRef
+    parentRef,
   });
 
   const [show, setShow] = React.useState(true);
@@ -55,14 +55,14 @@ function GridVirtualizerDynamic({ cells }) {
           style={{
             height: `400px`,
             width: `500px`,
-            overflow: "auto"
+            overflow: 'auto',
           }}
         >
           <div
             style={{
               height: rowVirtualizer.totalSize,
               width: columnVirtualizer.totalSize,
-              position: "relative"
+              position: 'relative',
             }}
           >
             {rowVirtualizer.virtualItems.map((virtualRow) => (
@@ -77,22 +77,22 @@ function GridVirtualizerDynamic({ cells }) {
                     className={
                       virtualColumn.index % 2
                         ? virtualRow.index % 2 === 0
-                          ? "ListItemOdd"
-                          : "ListItemEven"
+                          ? 'ListItemOdd'
+                          : 'ListItemEven'
                         : virtualRow.index % 2
-                        ? "ListItemOdd"
-                        : "ListItemEven"
+                        ? 'ListItemOdd'
+                        : 'ListItemEven'
                     }
                     style={{
-                      position: "absolute",
+                      position: 'absolute',
                       top: 0,
                       left: 0,
-                      transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`
+                      transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
                     }}
                   >
                     <div
                       style={{
-                        ...cells[virtualRow.index][virtualColumn.index]
+                        ...cells[virtualRow.index][virtualColumn.index],
                       }}
                     >
                       Cell {virtualRow.index}, {virtualColumn.index}
@@ -110,7 +110,7 @@ function GridVirtualizerDynamic({ cells }) {
       ) : null}
       <br />
       <br />›
-      {process.env.NODE_ENV === "development" ? (
+      {process.env.NODE_ENV === 'development' ? (
         <p>
           <strong>Notice:</strong> You are currently running React in
           development mode. Rendering performance will be slightly degraded
@@ -125,5 +125,5 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );

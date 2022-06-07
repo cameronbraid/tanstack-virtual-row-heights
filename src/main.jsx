@@ -6,14 +6,13 @@ import './index.css';
 import { useVirtual } from 'react-virtual';
 
 function App() {
-  return <b>test</b>;
   const cells = new Array(10).fill(true).map(() =>
     new Array(10).fill(true).map(() => ({
-      height: 25 + Math.round(Math.random() * 100),
+      height: 35 + Math.round(Math.random() * 100),
       width: 75 + Math.round(Math.random() * 100),
     }))
   );
-
+  console.log(cells);
   return (
     <div>
       <h3>Grid</h3>
@@ -72,19 +71,17 @@ function GridVirtualizerDynamic({ cells }) {
                   <div
                     key={virtualColumn.key}
                     ref={(el) => {
-                      virtualRow.measureRef(el);
-                      virtualColumn.measureRef(el);
+                      if (virtualColumn.index == 0) {
+                        virtualRow.measureRef(el);
+                        // virtualColumn.measureRef(el);
+                      }
+                      if (virtualRow.index == 0) {
+                        // virtualRow.measureRef(el);
+                        virtualColumn.measureRef(el);
+                      }
                     }}
-                    className={
-                      virtualColumn.index % 2
-                        ? virtualRow.index % 2 === 0
-                          ? 'ListItemOdd'
-                          : 'ListItemEven'
-                        : virtualRow.index % 2
-                        ? 'ListItemOdd'
-                        : 'ListItemEven'
-                    }
                     style={{
+                      border: '1px dashed silver',
                       position: 'absolute',
                       top: 0,
                       left: 0,
@@ -98,9 +95,6 @@ function GridVirtualizerDynamic({ cells }) {
                     >
                       Cell {virtualRow.index}, {virtualColumn.index}
                       <br />
-                      {JSON.stringify(
-                        cells[virtualRow.index][virtualColumn.index]
-                      )}
                     </div>
                   </div>
                 ))}
